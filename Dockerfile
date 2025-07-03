@@ -10,9 +10,10 @@ RUN go mod download
 COPY . .
 
 # Compilar a aplicação
-# Construir a partir do diretório raíz do projeto
+ARG TARGETOS
+ARG TARGETARCH
 WORKDIR /app
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o auth-service ./cmd/auth-service
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -installsuffix cgo -o auth-service ./cmd/auth-service
 
 # Imagem final
 FROM alpine:3.18
