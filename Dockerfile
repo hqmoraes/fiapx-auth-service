@@ -10,9 +10,9 @@ RUN go mod download
 COPY . .
 
 # Compilar a aplicação
-# Alterar diretório para cmd/auth-service antes de compilar
-WORKDIR /app/cmd/auth-service
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o /app/auth-service .
+# Build from project root, targeting cmd/auth-service
+WORKDIR /app
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o auth-service ./cmd/auth-service
 
 # Imagem final
 FROM alpine:3.18
