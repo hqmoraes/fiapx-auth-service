@@ -10,10 +10,12 @@ RUN go mod download
 COPY . .
 
 # Compilar a aplicação
+# Cross-build arguments
 ARG TARGETOS
 ARG TARGETARCH
-WORKDIR /app
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -installsuffix cgo -o auth-service ./cmd/auth-service
+# Switch to service folder for build
+WORKDIR /app/cmd/auth-service
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build -a -installsuffix cgo -o /app/auth-service .
 
 # Imagem final
 FROM alpine:3.18
